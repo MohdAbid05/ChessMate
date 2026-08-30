@@ -713,7 +713,7 @@ class App(tk.Tk):
         super().__init__()
         configure_ui_theme()
         self.configure(bg=APP_BG)
-        self.title("AI Powered Chess")
+        self.title("ChessMate")
         self.geometry("980x700")
         self.minsize(900, 620)
         self.resizable(True, True)

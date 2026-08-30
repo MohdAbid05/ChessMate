@@ -1,4 +1,4 @@
-# AI Powered Chess Game
+# ChessMate
 
 A lightweight chess app built with Python and Tkinter. It includes local two-player gameplay, AI-assisted modes, move tracking, save/load support, and a zipapp build for easy sharing.
 
@@ -87,10 +87,10 @@ Chess/
 
 ## Recommended GitHub repo name
 
-A cleaner GitHub slug is:
+The clean public repo name is:
 
 ```text
-ai-powered-chess-game
+chessmate
 ```
 
-This is more polished than the underscore version and is easier to read in URLs.
+This keeps the project simple, memorable, and aligned with the app brand.
