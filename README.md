@@ -1,15 +1,15 @@
 # ChessMate
 
-A lightweight chess app built with Python and Tkinter. It includes local two-player gameplay, AI-assisted modes, move tracking, save/load support, and a zipapp build for easy sharing.
+A small chess game built in Python with a Tkinter interface. It supports local multiplayer, optional AI play, save/load, move tracking, and a packaged zipapp version for easy sharing.
 
-## Features
+## What it includes
 
 - Human vs Human
 - Human vs AI
-- AI vs AI showcase mode
+- AI vs AI demo mode
 - Move history and captured-piece tracking
-- Undo, resign, and draw controls
-- JSON save/load support
+- Undo, draw, and resign actions
+- Save and load game states
 - Optional commentary and hints
 
 ## Requirements
@@ -18,19 +18,19 @@ A lightweight chess app built with Python and Tkinter. It includes local two-pla
 - Tkinter
 - python-chess
 
-Install the base dependency:
+Install the base package:
 
 ```bash
 pip install -r requirements.txt
 ```
 
-If you want to use AI modes, install the providers you plan to use:
+If you want the AI modes, install the provider SDKs you plan to use:
 
 ```bash
 pip install openai google-generativeai
 ```
 
-## Run locally
+## Run it
 
 From the project folder:
 
@@ -58,9 +58,7 @@ Then run:
 python chess.pyz
 ```
 
-This keeps the core game portable while leaving the AI providers as optional installs.
-
-## Project layout
+## Project structure
 
 ```text
 Chess/
@@ -81,16 +79,16 @@ Chess/
 
 ## Notes
 
-- API keys are stored in your home directory in a small config file instead of inside the app bundle.
-- The AI providers are optional and will prompt you if the SDK is missing.
-- The zipapp is designed for quick sharing, but AI features still depend on the provider packages being installed on the machine running the app.
+- API keys are stored in your home folder in a small config file, not inside the app bundle.
+- AI support is optional and will prompt you if the required SDK is missing.
+- The zipapp is useful for quick sharing, but the AI features still need their provider packages installed on the machine running the app.
 
-## Recommended GitHub repo name
+## Repo name
 
-The clean public repo name is:
+Use this repo name:
 
 ```text
 chessmate
 ```
 
-This keeps the project simple, memorable, and aligned with the app brand.
+It is short, clean, and matches the app branding.
