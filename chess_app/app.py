@@ -31,6 +31,40 @@ CANVAS_SIZE = BOARD_PX + MARGIN * 2
 PROMO_NAMES = {chess.QUEEN: "Queen", chess.ROOK: "Rook", chess.BISHOP: "Bishop", chess.KNIGHT: "Knight"}
 PROMO_LETTER = {chess.QUEEN: "Q", chess.ROOK: "R", chess.BISHOP: "B", chess.KNIGHT: "N"}
 
+APP_BG = "#101820"
+PANEL_BG = "#182532"
+CARD_BG = "#f4efe8"
+FIELD_BG = "#f9f7f3"
+ACCENT = "#3b82f6"
+ACCENT_DARK = "#1d4ed8"
+TEXT_PRIMARY = "#e5e7eb"
+TEXT_SECONDARY = "#cbd5e1"
+SUCCESS = "#22c55e"
+WARNING = "#f59e0b"
+
+
+def configure_ui_theme():
+    style = ttk.Style()
+    try:
+        style.theme_use("clam")
+    except Exception:
+        pass
+
+    style.configure("TFrame", background=APP_BG)
+    style.configure("TLabel", background=APP_BG, foreground=TEXT_PRIMARY, font=("Segoe UI", 10))
+    style.configure("Header.TLabel", background=APP_BG, foreground="#f8fafc", font=("Segoe UI", 22, "bold"))
+    style.configure("Card.TFrame", background=PANEL_BG)
+    style.configure("Panel.TLabelframe", background=PANEL_BG, foreground=TEXT_PRIMARY)
+    style.configure("Panel.TLabelframe.Label", background=PANEL_BG, foreground=TEXT_PRIMARY, font=("Segoe UI", 10, "bold"))
+    style.configure("TEntry", fieldbackground=FIELD_BG, foreground="#111827")
+    style.configure("TCheckbutton", background=APP_BG, foreground=TEXT_PRIMARY)
+    style.configure("TButton", background=ACCENT, foreground="#ffffff", padding=(10, 6), font=("Segoe UI", 10, "bold"))
+    style.map("TButton", background=[("active", ACCENT_DARK), ("pressed", ACCENT_DARK)], foreground=[("pressed", "#ffffff")])
+    style.configure("Primary.TButton", background=ACCENT, foreground="#ffffff", padding=(14, 8), font=("Segoe UI", 10, "bold"))
+    style.map("Primary.TButton", background=[("active", ACCENT_DARK), ("pressed", ACCENT_DARK)])
+    style.configure("Secondary.TButton", background="#2a3a4a", foreground=TEXT_PRIMARY, padding=(10, 6), font=("Segoe UI", 9, "bold"))
+    style.map("Secondary.TButton", background=[("active", "#374c60"), ("pressed", "#374c60")])
+
 
 class SetupScreen(ttk.Frame):
     def __init__(self, master, on_start, on_load):
@@ -38,16 +72,17 @@ class SetupScreen(ttk.Frame):
         self.on_start = on_start
         self.on_load = on_load
         cfg = load_config()
+        self.configure(style="Card.TFrame")
 
-        ttk.Label(self, text="♔ Chess ♚", font=("Helvetica", 20, "bold")).pack(pady=(0, 15))
+        ttk.Label(self, text="♔ AI Powered Chess ♚", style="Header.TLabel").pack(pady=(0, 18))
 
         self.mode = tk.StringVar(value="human_human")
-        mode_frame = ttk.LabelFrame(self, text="Mode", padding=10)
+        mode_frame = ttk.LabelFrame(self, text="Mode", padding=10, style="Panel.TLabelframe")
         mode_frame.pack(fill="x", pady=5)
         for val, label in [("human_human", "Human vs Human"), ("human_ai", "Me vs AI"), ("ai_ai", "AI vs AI (showcase)")]:
             ttk.Radiobutton(mode_frame, text=label, variable=self.mode, value=val, command=self.refresh_visibility).pack(anchor="w")
 
-        self.hva_frame = ttk.LabelFrame(self, text="Me vs AI options", padding=10)
+        self.hva_frame = ttk.LabelFrame(self, text="Me vs AI options", padding=10, style="Panel.TLabelframe")
         self.human_color = tk.StringVar(value="white")
         ttk.Label(self.hva_frame, text="Your color:").grid(row=0, column=0, sticky="w")
         ttk.Radiobutton(self.hva_frame, text="White", variable=self.human_color, value="white").grid(row=0, column=1)
@@ -73,7 +108,7 @@ class SetupScreen(ttk.Frame):
         ttk.Radiobutton(self.commentator_row, text="Gemini", variable=self.commentator_provider, value="gemini").pack(side="left")
         self.commentator_row.grid(row=3, column=0, columnspan=3, sticky="w")
 
-        self.aia_frame = ttk.LabelFrame(self, text="AI vs AI options", padding=10)
+        self.aia_frame = ttk.LabelFrame(self, text="AI vs AI options", padding=10, style="Panel.TLabelframe")
         self.white_provider = tk.StringVar(value="openai")
         self.black_provider = tk.StringVar(value="gemini")
         ttk.Label(self.aia_frame, text="White plays as:").grid(row=0, column=0, sticky="w")
@@ -83,7 +118,7 @@ class SetupScreen(ttk.Frame):
         ttk.Radiobutton(self.aia_frame, text="OpenAI", variable=self.black_provider, value="openai").grid(row=1, column=1, pady=(6, 0))
         ttk.Radiobutton(self.aia_frame, text="Gemini", variable=self.black_provider, value="gemini").grid(row=1, column=2, pady=(6, 0))
 
-        self.key_frame = ttk.LabelFrame(self, text="API keys (only needed for AI modes)", padding=10)
+        self.key_frame = ttk.LabelFrame(self, text="API keys (only needed for AI modes)", padding=10, style="Panel.TLabelframe")
         self.key_frame.pack(fill="x", pady=10)
         ttk.Label(self.key_frame, text="OpenAI API key:").grid(row=0, column=0, sticky="w")
         self.openai_key_var = tk.StringVar(value=cfg.get("openai_key", ""))
@@ -98,10 +133,10 @@ class SetupScreen(ttk.Frame):
             row=2, column=0, columnspan=2, sticky="w", pady=(8, 0)
         )
 
-        btn_row = ttk.Frame(self)
+        btn_row = ttk.Frame(self, style="Card.TFrame")
         btn_row.pack(pady=15)
-        ttk.Button(btn_row, text="Start Game", command=self.start).pack(side="left", padx=5)
-        ttk.Button(btn_row, text="📂 Load Game...", command=self.on_load).pack(side="left", padx=5)
+        ttk.Button(btn_row, text="Start Game", command=self.start, style="Primary.TButton").pack(side="left", padx=5)
+        ttk.Button(btn_row, text="📂 Load Game...", command=self.on_load, style="Secondary.TButton").pack(side="left", padx=5)
 
         self.refresh_visibility()
 
@@ -175,7 +210,8 @@ class SetupScreen(ttk.Frame):
 
 class GameScreen(ttk.Frame):
     def __init__(self, master, settings, on_restart, on_load, resume_data=None):
-        super().__init__(master, padding=10)
+        super().__init__(master, padding=12)
+        self.configure(style="Card.TFrame")
         self.settings = settings
         self.on_restart = on_restart
         self.on_load = on_load
@@ -198,45 +234,45 @@ class GameScreen(ttk.Frame):
         else:
             self.board = chess.Board()
 
-        top = ttk.Frame(self)
-        top.pack(fill="x")
+        top = ttk.Frame(self, style="Card.TFrame")
+        top.pack(fill="x", pady=(0, 8))
         self.status_var = tk.StringVar(value="White to move")
-        ttk.Label(top, textvariable=self.status_var, font=("Helvetica", 13, "bold")).pack(side="left")
+        ttk.Label(top, textvariable=self.status_var, font=("Segoe UI", 13, "bold")).pack(side="left")
 
-        btns = ttk.Frame(top)
+        btns = ttk.Frame(top, style="Card.TFrame")
         btns.pack(side="right")
-        ttk.Button(btns, text="New Game", command=self.on_restart).pack(side="right", padx=(4, 0))
-        ttk.Button(btns, text="💾 Save", command=self.save_game).pack(side="right", padx=(4, 0))
-        ttk.Button(btns, text="📂 Load...", command=self.on_load).pack(side="right", padx=(4, 0))
-        ttk.Button(btns, text="↩ Undo", command=self.undo_move).pack(side="right", padx=(4, 0))
+        ttk.Button(btns, text="New Game", command=self.on_restart, style="Secondary.TButton").pack(side="right", padx=(4, 0))
+        ttk.Button(btns, text="💾 Save", command=self.save_game, style="Secondary.TButton").pack(side="right", padx=(4, 0))
+        ttk.Button(btns, text="📂 Load...", command=self.on_load, style="Secondary.TButton").pack(side="right", padx=(4, 0))
+        ttk.Button(btns, text="↩ Undo", command=self.undo_move, style="Secondary.TButton").pack(side="right", padx=(4, 0))
         if self.settings["mode"] in ("human_human", "human_ai"):
-            ttk.Button(btns, text="🤝 Offer Draw", command=self.offer_draw).pack(side="right", padx=(4, 0))
-            ttk.Button(btns, text="🏳 Resign", command=self.resign).pack(side="right", padx=(4, 0))
+            ttk.Button(btns, text="🤝 Offer Draw", command=self.offer_draw, style="Secondary.TButton").pack(side="right", padx=(4, 0))
+            ttk.Button(btns, text="🏳 Resign", command=self.resign, style="Secondary.TButton").pack(side="right", padx=(4, 0))
 
-        body = ttk.Frame(self)
+        body = ttk.Frame(self, style="Card.TFrame")
         body.pack(fill="both", expand=True, pady=10)
 
         self.canvas = tk.Canvas(body, width=CANVAS_SIZE, height=CANVAS_SIZE, highlightthickness=0)
         self.canvas.pack(side="left")
         self.canvas.bind("<Button-1>", self.on_click)
 
-        side = ttk.Frame(body, padding=(15, 0))
+        side = ttk.Frame(body, padding=(15, 0), style="Card.TFrame")
         side.pack(side="left", fill="both", expand=True)
 
-        ttk.Label(side, text="Move history", font=("Helvetica", 11, "bold")).pack(anchor="w")
+        ttk.Label(side, text="Move history", font=("Segoe UI", 11, "bold")).pack(anchor="w")
         self.history_box = tk.Listbox(side, width=28, height=10)
         self.history_box.pack(fill="x", pady=(0, 10))
 
-        ttk.Label(side, text="Captured pieces", font=("Helvetica", 11, "bold")).pack(anchor="w")
+        ttk.Label(side, text="Captured pieces", font=("Segoe UI", 11, "bold")).pack(anchor="w")
         self.captured_var = tk.StringVar(value="White: —\nBlack: —")
         ttk.Label(side, textvariable=self.captured_var, justify="left").pack(anchor="w", pady=(0, 10))
 
-        ttk.Label(side, text="Game log", font=("Helvetica", 11, "bold")).pack(anchor="w")
+        ttk.Label(side, text="Game log", font=("Segoe UI", 11, "bold")).pack(anchor="w")
         self.log_box = tk.Text(side, width=30, height=8, wrap="word", state="disabled")
         self.log_box.pack(fill="both", expand=True)
 
         if self.settings["mode"] == "human_ai":
-            self.hint_btn = ttk.Button(side, text="💡 Get a hint", command=self.request_hint)
+            self.hint_btn = ttk.Button(side, text="💡 Get a hint", command=self.request_hint, style="Secondary.TButton")
             self.hint_btn.pack(fill="x", pady=(8, 0))
 
         if resume_data:
@@ -675,8 +711,12 @@ class GameScreen(ttk.Frame):
 class App(tk.Tk):
     def __init__(self):
         super().__init__()
-        self.title("Chess")
-        self.resizable(False, False)
+        configure_ui_theme()
+        self.configure(bg=APP_BG)
+        self.title("AI Powered Chess")
+        self.geometry("980x700")
+        self.minsize(900, 620)
+        self.resizable(True, True)
         self.show_setup()
 
     def show_setup(self):
