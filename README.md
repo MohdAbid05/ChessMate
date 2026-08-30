@@ -1,16 +1,16 @@
-# Chess app
+# AI Powered Chess Game
 
-A simple chess app with a Tkinter board, local match tracking, and optional AI support. It works as a normal Python project and can also be packaged as a zipapp for easier sharing.
+A lightweight chess app built with Python and Tkinter. It includes local two-player gameplay, AI-assisted modes, move tracking, save/load support, and a zipapp build for easy sharing.
 
-## What it does
+## Features
 
 - Human vs Human
 - Human vs AI
-- AI vs AI demo mode
-- Move history and captured pieces
-- Undo, resign, and draw actions
-- Save and load games as JSON
-- Optional AI commentary and hints
+- AI vs AI showcase mode
+- Move history and captured-piece tracking
+- Undo, resign, and draw controls
+- JSON save/load support
+- Optional commentary and hints
 
 ## Requirements
 
@@ -24,13 +24,13 @@ Install the base dependency:
 pip install -r requirements.txt
 ```
 
-If you want the AI modes, install the SDKs for the providers you plan to use:
+If you want to use AI modes, install the providers you plan to use:
 
 ```bash
 pip install openai google-generativeai
 ```
 
-## Run it locally
+## Run locally
 
 From the project folder:
 
@@ -52,13 +52,13 @@ From the project root:
 python -m zipapp . -o chess.pyz -p "/usr/bin/env python3"
 ```
 
-Then launch it with:
+Then run:
 
 ```bash
 python chess.pyz
 ```
 
-The project includes the main dependency in the repo when needed, so the basic chess experience still works without extra package installs beyond the standard Python setup.
+This keeps the core game portable while leaving the AI providers as optional installs.
 
 ## Project layout
 
@@ -81,6 +81,16 @@ Chess/
 
 ## Notes
 
-- API keys are stored in your home directory in a small config file, not inside the app bundle.
+- API keys are stored in your home directory in a small config file instead of inside the app bundle.
 - The AI providers are optional and will prompt you if the SDK is missing.
-- The zipapp is meant to be easy to share, but the AI providers still depend on the machine running the app having their packages installed.
+- The zipapp is designed for quick sharing, but AI features still depend on the provider packages being installed on the machine running the app.
+
+## Recommended GitHub repo name
+
+A cleaner GitHub slug is:
+
+```text
+ai-powered-chess-game
+```
+
+This is more polished than the underscore version and is easier to read in URLs.
