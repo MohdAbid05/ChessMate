@@ -83,12 +83,4 @@ Chess/
 - AI support is optional and will prompt you if the required SDK is missing.
 - The zipapp is useful for quick sharing, but the AI features still need their provider packages installed on the machine running the app.
 
-## Repo name
 
-Use this repo name:
-
-```text
-chessmate
-```
-
-It is short, clean, and matches the app branding.
